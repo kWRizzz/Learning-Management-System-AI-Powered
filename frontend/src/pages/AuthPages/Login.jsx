@@ -4,11 +4,12 @@ import google from '../../assets/google.jpg'
 import { LuEye } from "react-icons/lu";
 import { LuEyeClosed } from "react-icons/lu";
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
 
   const [show, setShow] = useState(false)
-
+  const navigate=useNavigate()
   return (
     <div
       className='bg-[#dddbdb] w-[100vw] h-[100vh] flex justify-center items-center'
@@ -38,7 +39,7 @@ function Login() {
 
             <div className='flex flex-col gap-1 w-[80%] items-start justify-center px-3 relative'>
               <label htmlFor="name" className='font-semibold'>Password</label>
-              <input id='password' type="password" className='border-1 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]' placeholder='Password' />
+              <input id='password' type={show ? "text" : "password"} className='border-1 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]' placeholder='Password' />
               {
                 show ?
                   <LuEye
@@ -72,6 +73,16 @@ function Login() {
               <img src={google} className='w-[25px]' alt="" />
               <span className='text-[18px] text-gray-500'>oogle</span>
             </div>
+          </div>
+          <div
+            className=' text-[#6f6f6f]'
+          >
+            Don't have an account ?
+            <span
+              onClick={() => navigate('/signup')}
+              className='underline underline-offset-1 text-black ml-2'>
+              SignUp
+            </span>
           </div>
         </div>
 
