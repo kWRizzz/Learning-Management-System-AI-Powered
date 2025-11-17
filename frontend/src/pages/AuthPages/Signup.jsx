@@ -11,7 +11,15 @@ import { useNavigate } from 'react-router-dom';
 function Signup() {
 
     const [show, setShow] = useState(false)
-    const navigate=useNavigate()
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    const handSubmit = async () => {
+
+    }
+
+    const navigate = useNavigate()
     return (
         <div
             className='bg-[#dddbdb] w-[100vw] h-[100vh] flex justify-center items-center'
@@ -30,44 +38,52 @@ function Signup() {
                         <h2 className='text-[#999797] text-[18px]'>Create your account</h2>
 
                         {/* Name */}
-                        <div className='flex flex-col gap-1 w-[80%] items-start justify-center px-3'>
+                        <div
+                            className='flex flex-col gap-1 w-[80%] items-start justify-center px-3'
+                        >
                             <label htmlFor="name" className='font-semibold'>Name</label>
-                            <input id='name' type="text" className='border-1 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]' placeholder='Your name' />
+                            <input
+                                value={name}
+                                id='name'
+                                type="text"
+                                className=' border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]'
+                                placeholder='Your name'
+                            />
                         </div>
 
                         {/* Email */}
 
                         <div className='flex flex-col gap-1 w-[80%] items-start justify-center px-3'>
                             <label htmlFor="name" className='font-semibold'>Email</label>
-                            <input id='email' type="email" className='border-1 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]' placeholder='Your name' />
+                            <input id='email' type="email" className='border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]' placeholder='Your name' />
                         </div>
 
                         {/* password */}
 
                         <div className='flex flex-col gap-1 w-[80%] items-start justify-center px-3 relative'>
                             <label htmlFor="name" className='font-semibold'>Password</label>
-                            <input id='password' type={show ? "text" : "password"} className='border-1 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]' placeholder='Password' />
+                            <input id='password' type={show ? "text" : "password"} className='border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]' placeholder='Password' />
                             {
                                 show ?
                                     <LuEye
                                         className='absolute w-[20px] h-[20px] cursor-pointer right-[5%] bottom-[10%]'
-                                        onChange={()=>setShow(prev=>!prev)}
+                                        onChange={() => setShow(prev => !prev)}
                                     />
                                     :
                                     <LuEyeClosed
                                         className='absolute w-[20px] h-[20px] cursor-pointer right-[5%] bottom-[10%]'
-                                        onChange={()=>setShow(prev=>!prev)}
+                                        onChange={() => setShow(prev => !prev)}
                                     />
                             }
                         </div>
 
                         {/* Choose Mentor Or Student */}
 
-                        <div className='flex md:w-[50%] w-[70%] items-center justify-between'>
-                            <span className='px-[10px] py-[5px] border-[2px] border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black'>
+                        <div className='flex md:w-[50%] w-[70%] items-center justify-between mt-2 mb-2'>
+                            <span className='px-[10px] py-[5px] border-[2px] border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black mx-1'>
                                 Student
                             </span>
-                            <span className='px-[10px] py-[5px] border-[2px] border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black'>
+                            <span className='px-[10px] py-[5px] border-[2px] border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black mx-1'>
                                 Educator
                             </span>
                         </div>
@@ -76,7 +92,9 @@ function Signup() {
                         <button className='w-[80%] h-[40px] bg-black text-white cursor-pointer flex items-center justify-center rounded-[5px]'>
                             SignUp
                         </button>
-                        <div className='w-[80%] flex items-center gap-2'>
+
+
+                        <div className='w-[80%] flex items-center gap-2 mt-1'>
                             <div className='w-[25%] h-[0.5px] bg-[#c4c4c4]'></div>
                             <div className='w-[50%] text-[15px] text-[#6f6f6f] flex items-center justify-center'>
                                 Or continue
@@ -96,8 +114,8 @@ function Signup() {
                     >
                         Already have an account ?
                         <span
-                        onClick={()=>navigate('/login')}
-                        className='underline underline-offset-1 text-black ml-2'>
+                            onClick={() => navigate('/login')}
+                            className='underline underline-offset-1 text-black ml-2'>
                             LogIn
                         </span>
                     </div>

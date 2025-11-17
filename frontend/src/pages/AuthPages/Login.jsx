@@ -32,14 +32,14 @@ function Login() {
 
             <div className='flex flex-col gap-1 w-[80%] items-start justify-center px-3'>
               <label htmlFor="name" className='font-semibold'>Email</label>
-              <input id='email' type="email" className='border-1 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]' placeholder='Your name' />
+              <input id='email' type="email" className='border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]' placeholder='Your name' />
             </div>
 
             {/* password */}
 
-            <div className='flex flex-col gap-1 w-[80%] items-start justify-center px-3 relative'>
+            <div className='flex flex-col gap-1 w-[80%] items-start justify-center px-3 relative mb-2'>
               <label htmlFor="name" className='font-semibold'>Password</label>
-              <input id='password' type={show ? "text" : "password"} className='border-1 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]' placeholder='Password' />
+              <input id='password' type={show ? "text" : "password"} className='border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]' placeholder='Password' />
               {
                 show ?
                   <LuEye
@@ -56,10 +56,10 @@ function Login() {
 
 
             {/* BUtton */}
-            <button className='w-[80%] h-[40px] bg-black text-white cursor-pointer flex items-center justify-center rounded-[5px]'>
+            <button className='w-[80%] h-[40px] bg-black text-white cursor-pointer flex items-center justify-center rounded-[5px] mt-1'>
               LogIn
             </button>
-            <div className='w-[80%] flex items-center gap-2'>
+            <div className='w-[80%] flex items-center gap-2 mt-1'>
               <div className='w-[25%] h-[0.5px] bg-[#c4c4c4]'></div>
               <div className='w-[50%] text-[15px] text-[#6f6f6f] flex items-center justify-center'>
                 Or continue
