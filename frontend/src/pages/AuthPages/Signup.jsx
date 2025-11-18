@@ -5,7 +5,9 @@ import { LuEye } from "react-icons/lu";
 import { LuEyeClosed } from "react-icons/lu";
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import axios from 'axios'
+import { serverUrl } from '../../App';
+import { toast } from 'react-toastify';
 
 
 function Signup() {
@@ -14,9 +16,23 @@ function Signup() {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [role, setRole] = useState("")
 
     const handSubmit = async () => {
-
+        try {
+            const response= await axios.post(serverUrl + "/signup",
+                {name,email,password,role},
+                {withCredentials:true})
+                console.log(response.data)
+                navigate("/")
+                toast.done("Signup Succesfully")
+            
+            
+        } catch (error) {
+            console.log(error);
+            toast.error("Something over")
+            
+        }
     }
 
     const navigate = useNavigate()
@@ -34,7 +50,7 @@ function Signup() {
                     className=' md:w-[50%] h-[100%] w-[100%] flex  flex-col gap-y-5  justify-center items-center '
                 >
                     <div>
-                        <h1 className='font-semibold text-black text-2xl'>let's get started</h1>
+                        <h1 className='font-semibold text-black text-2xl'>Let's Get Started</h1>
                         <h2 className='text-[#999797] text-[18px]'>Create your account</h2>
 
                         {/* Name */}
@@ -44,10 +60,11 @@ function Signup() {
                             <label htmlFor="name" className='font-semibold'>Name</label>
                             <input
                                 value={name}
+                                onClick={(e) => setName(e.target.value)}
                                 id='name'
                                 type="text"
                                 className=' border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]'
-                                placeholder='Your name'
+                                placeholder='UserName'
                             />
                         </div>
 
@@ -55,14 +72,28 @@ function Signup() {
 
                         <div className='flex flex-col gap-1 w-[80%] items-start justify-center px-3'>
                             <label htmlFor="name" className='font-semibold'>Email</label>
-                            <input id='email' type="email" className='border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]' placeholder='Your name' />
+                            <input
+                                value={email}
+                                onClick={(e) => setEmail(e.target.value)}
+                                id='email'
+                                type="email"
+                                className='border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]'
+                                placeholder='User-Email'
+                            />
                         </div>
 
                         {/* password */}
 
                         <div className='flex flex-col gap-1 w-[80%] items-start justify-center px-3 relative'>
                             <label htmlFor="name" className='font-semibold'>Password</label>
-                            <input id='password' type={show ? "text" : "password"} className='border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]' placeholder='Password' />
+                            <input
+                                value={password}
+                                onClick={(e) => setPassword(e.target.value)}
+                                id='password'
+                                type={show ? "text" : "password"}
+                                className='border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]'
+                                placeholder='Password'
+                            />
                             {
                                 show ?
                                     <LuEye
@@ -79,11 +110,17 @@ function Signup() {
 
                         {/* Choose Mentor Or Student */}
 
-                        <div className='flex md:w-[50%] w-[70%] items-center justify-between mt-2 mb-2'>
-                            <span className='px-[10px] py-[5px] border-[2px] border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black mx-1'>
+                        <div className='flex md:w-[50%] w-[70%] items-center justify-between mt-2 mb-5'>
+                            <span
+                                onClick={(e) => setRole("Student")}
+                                className='px-[10px] py-[5px] border-[2px] border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black mx-1
+                            '>
                                 Student
                             </span>
-                            <span className='px-[10px] py-[5px] border-[2px] border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black mx-1'>
+                            <span
+                                onClick={(e) => setRole("Educator")}
+                                className='px-[10px] py-[5px] border-[2px] border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black mx-1'
+                            >
                                 Educator
                             </span>
                         </div>
