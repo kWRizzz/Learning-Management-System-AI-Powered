@@ -4,7 +4,7 @@ import Home from './pages/HomePage/Home'
 import Signup from './pages/AuthPages/Signup'
 import Login from './pages/AuthPages/Login'
 import { ToastContainer } from "react-toastify";
-export const serverUrl=`http://localhost:3000/api`
+export const serverUrl=`http://localhost:3000`
 
 function App() {
   return (

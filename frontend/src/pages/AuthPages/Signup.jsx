@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { serverUrl } from '../../App';
 import { toast } from 'react-toastify';
-
+import { ClipLoader } from 'react-spinners'
 
 function Signup() {
 
@@ -16,22 +16,25 @@ function Signup() {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [role, setRole] = useState("")
-
+    const [role, setRole] = useState("student")
+    const [loading, setLoading] = useState(false)
     const handSubmit = async () => {
+        setLoading(true)
         try {
-            const response= await axios.post(serverUrl + "/signup",
-                {name,email,password,role},
-                {withCredentials:true})
-                console.log(response.data)
-                navigate("/")
-                toast.done("Signup Succesfully")
-            
-            
+            const response = await axios.post(serverUrl + "/api/signup",
+                { name, email, password, role },
+                { withCredentials: true }
+            )
+            console.log(response.data)
+            setLoading(false)
+            navigate("/")
+            toast.done("Signup Succesfully")
+
+
         } catch (error) {
             console.log(error);
             toast.error("Something over")
-            
+
         }
     }
 
@@ -40,9 +43,11 @@ function Signup() {
         <div
             className='bg-[#dddbdb] w-[100vw] h-[100vh] flex justify-center items-center'
         >
+
             <form
-                className='w-[57%] md:w-200 h-[35.5rem] bg-[white] border border-black shadow-xl rounded-2xl flex '
+                className='w-[57%] md:w-200 h-[35.5rem] bg-[white] border border-black shadow-xl rounded-2xl flex  '
                 action=""
+                onSubmit={(e) => e.preventDefault()}
             >
                 {/* left */}
 
@@ -60,10 +65,10 @@ function Signup() {
                             <label htmlFor="name" className='font-semibold'>Name</label>
                             <input
                                 value={name}
-                                onClick={(e) => setName(e.target.value)}
+                                onChange={(e) => setName(e.target.value)}
                                 id='name'
                                 type="text"
-                                className=' border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]'
+                                className=' border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px] text-violet-300  '
                                 placeholder='UserName'
                             />
                         </div>
@@ -74,7 +79,7 @@ function Signup() {
                             <label htmlFor="name" className='font-semibold'>Email</label>
                             <input
                                 value={email}
-                                onClick={(e) => setEmail(e.target.value)}
+                                onChange={(e) => setEmail(e.target.value)}
                                 id='email'
                                 type="email"
                                 className='border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]'
@@ -88,7 +93,7 @@ function Signup() {
                             <label htmlFor="name" className='font-semibold'>Password</label>
                             <input
                                 value={password}
-                                onClick={(e) => setPassword(e.target.value)}
+                                onChange={(e) => setPassword(e.target.value)}
                                 id='password'
                                 type={show ? "text" : "password"}
                                 className='border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]'
@@ -112,22 +117,29 @@ function Signup() {
 
                         <div className='flex md:w-[50%] w-[70%] items-center justify-between mt-2 mb-5'>
                             <span
-                                onClick={(e) => setRole("Student")}
-                                className='px-[10px] py-[5px] border-[2px] border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black mx-1
-                            '>
+                                className={`px-[10px] py-[5px] border-[2px] border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black ${role === "student" ? "border-black" : "border-[#646464]"
+                                    }`}
+                                onClick={() => setRole("student")}
+                            >
                                 Student
                             </span>
+
                             <span
-                                onClick={(e) => setRole("Educator")}
-                                className='px-[10px] py-[5px] border-[2px] border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black mx-1'
+                                className={`px-[10px] py-[5px] border-[2px] border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black ${role === "educator" ? "border-black" : "border-[#646464]"
+                                    }`}
+                                onClick={() => setRole("educator")}
                             >
                                 Educator
                             </span>
                         </div>
 
                         {/* BUtton */}
-                        <button className='w-[80%] h-[40px] bg-black text-white cursor-pointer flex items-center justify-center rounded-[5px]'>
-                            SignUp
+                        <button
+                            className='w-[80%] h-[40px] bg-black text-white cursor-pointer flex items-center justify-center rounded-[5px] '
+                            disabled={loading}
+                            onClick={ handSubmit}
+                        >
+                            {loading ? <ClipLoader size={30} color='white' /> : "SignUp"}
                         </button>
 
 
@@ -166,7 +178,7 @@ function Signup() {
                     <img
                         className=' w-32 shadow-2xl'
                         src={logo}
-                        alt=""
+                        
                     />
                     <span
                         className=' text-white text-2xl'

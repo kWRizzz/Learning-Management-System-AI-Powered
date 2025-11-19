@@ -61,6 +61,8 @@ function Login() {
             >
               LogIn
             </button>
+            <span className="text-[13px] cursor-pointer text-[#585757]">Forgot password?</span>
+
             <div className='w-[80%] flex items-center gap-2 mt-2'>
               <div className='w-[25%] h-[0.5px] bg-[#c4c4c4]'></div>
               <div className='w-[50%] text-[15px] text-[#6f6f6f] flex items-center justify-center'>

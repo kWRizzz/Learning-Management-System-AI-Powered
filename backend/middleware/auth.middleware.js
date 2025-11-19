@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 const checkUser = async (req, res, next) => {
     try {
 
-        let { token } = req.cookie
+        let { token } = req.cookies
 
         if (!token) return res.status(400).json({
             message: "User Doesn't Have A Token "
