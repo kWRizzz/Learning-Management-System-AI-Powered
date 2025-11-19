@@ -5,10 +5,41 @@ import { LuEye } from "react-icons/lu";
 import { LuEyeClosed } from "react-icons/lu";
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
+import axios from 'axios';
+import { serverUrl } from '../../App';
+import { toast } from 'react-toastify';
 
 function Login() {
 
   const [show, setShow] = useState(false)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  const handlLogin= async ()=>{
+    setLoading(true)
+    try {
+      const response = await axios.post(serverUrl+'/api/login',
+        {
+          email:email,
+          password:password
+        },
+        {
+          withCredentials:true
+        }
+      )
+      console.log(response.data);
+      toast.success("Logged In Succesfully")
+      setLoading(false)
+      navigate('/')
+    } catch (error) {
+      console.log(error);
+      setLoading(false)
+      toast.error(error.response.data.message)
+    }
+  }
+
   const navigate = useNavigate()
   return (
     <div
@@ -32,14 +63,23 @@ function Login() {
 
             <div className='flex flex-col gap-1 w-[80%] items-start justify-center px-3'>
               <label htmlFor="name" className='font-semibold'>Email</label>
-              <input id='email' type="email" className='border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]' placeholder='Your name' />
+              <input id='email'
+                type="email"
+                className='border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]'
+                placeholder='Your name'
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+              />
             </div>
 
             {/* password */}
 
             <div className='flex flex-col gap-1 w-[80%] items-start justify-center px-3 relative mb-5'>
               <label htmlFor="name" className='font-semibold'>Password</label>
-              <input id='password' type={show ? "text" : "password"} className='border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]' placeholder='Password' />
+              <input id='password' type={show ? "text" : "password"} className='border-4 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] px-[20px]' placeholder='Password'
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+              />
               {
                 show ?
                   <LuEye
@@ -57,9 +97,10 @@ function Login() {
 
             {/* BUtton */}
             <button
-              className='w-[80%] h-[40px] bg-black text-white cursor-pointer flex items-center justify-center rounded-[5px] mt-1 transition-transform ease-in-out delay-100 duration-150   hover:bg-white   hover:text-black'
+              className='w-[80%] h-[40px] bg-black text-white cursor-pointer flex items-center justify-center rounded-[5px] mt-1 transition-transform ease-in-out delay-100 duration-150   hover:bg-white   hover:text-black'disabled={loading}
+              onClick={handlLogin}
             >
-              LogIn
+              {loading ? <ClipLoader size={30} color='white' />:"login"}
             </button>
             <span className="text-[13px] cursor-pointer text-[#585757]">Forgot password?</span>
 
